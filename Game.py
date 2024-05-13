@@ -1,7 +1,7 @@
 class Game:
     def __init__(self, id):
-        self.p1Want = False
-        self.p2Want = False
+        self.p1Went = False
+        self.p2Went = False
         self.ready = False
         self.id = id
         self.moves = [None, None]
@@ -18,15 +18,15 @@ class Game:
     def play(self, player, move):
         self.moves[player] = move
         if player == 0:
-            self.p1Want = True
+            self.p1Went = True
         else:
-            self.p2Want = True
+            self.p2Went = True
 
     def connected(self):
         return self.ready
 
-    def bothWant(self):
-        return self.p1Want and self.p2Want
+    def bothWent(self):
+        return self.p1Went and self.p2Went
 
     def winner(self):
 
@@ -49,6 +49,6 @@ class Game:
 
         return winner
 
-    def resetWant(self):
-        self.p1Want = False
-        self.p2Want = False
+    def resetWent(self):
+        self.p1Went = False
+        self.p2Went = False

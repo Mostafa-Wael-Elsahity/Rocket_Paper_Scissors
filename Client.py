@@ -50,20 +50,20 @@ def redrawWindow(win, game, p):
 
         move1 = game.get_player_move(0)
         move2 = game.get_player_move(1)
-        if game.bothWant():
+        if game.bothWent():
             text1 = font.render(move1, 1, (0,0,0))
             text2 = font.render(move2, 1, (0, 0, 0))
         else:
-            if game.p1Want and p == 0:
+            if game.p1Went and p == 0:
                 text1 = font.render(move1, 1, (0,0,0))
-            elif game.p1Want:
+            elif game.p1Went:
                 text1 = font.render("Locked In", 1, (0, 0, 0))
             else:
                 text1 = font.render("Waiting...", 1, (0, 0, 0))
 
-            if game.p2Want and p == 1:
+            if game.p2Went and p == 1:
                 text2 = font.render(move2, 1, (0,0,0))
-            elif game.p2Want:
+            elif game.p2Went:
                 text2 = font.render("Locked In", 1, (0, 0, 0))
             else:
                 text2 = font.render("Waiting...", 1, (0, 0, 0))
@@ -81,12 +81,16 @@ def redrawWindow(win, game, p):
     pygame.display.update()
 
 
-btns = [Button("Rock", 50, 500, (0,0,0)), Button("Scissors", 250, 500, (255,0,0)), Button("Paper", 450, 500, (0,255,0))]
+btns = [
+    Button("Rock", 50, 500, (0,0,0)),
+    Button("Scissors", 250, 500, (255,0,0)),
+    Button("Paper", 450, 500, (0,255,0))
+]
 def main():
     run = True
     clock = pygame.time.Clock()
     n = Network()
-    player = int(n.getP())
+    player = int(n.get_position())
     print("You are player", player)
 
     while run:
@@ -98,7 +102,7 @@ def main():
             print("Couldn't get game")
             break
 
-        if game.bothWant():
+        if game.bothWent():
             redrawWindow(win, game, player)
             pygame.time.delay(500)
             try:
@@ -130,10 +134,10 @@ def main():
                 for btn in btns:
                     if btn.click(pos) and game.connected():
                         if player == 0:
-                            if not game.p1Want:
+                            if not game.p1Went:
                                 n.send(btn.text)
                         else:
-                            if not game.p2Want:
+                            if not game.p2Went:
                                 n.send(btn.text)
 
         redrawWindow(win, game, player)
@@ -146,8 +150,8 @@ def menu_screen():
         clock.tick(60)
         win.fill((128, 128, 128))
         font = pygame.font.SysFont("comicsans", 60)
-        text = font.render("Click to Play!", 1, (255,0,0))
-        win.blit(text, (100,200))
+        text = font.render("Click to Play!", True, (255,0,0))
+        win.blit(text, (100, 200))
         pygame.display.update()
 
         for event in pygame.event.get():

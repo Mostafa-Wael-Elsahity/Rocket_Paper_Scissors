@@ -16,21 +16,20 @@ except socket.error as e:
 s.listen(2)
 print("Waiting for a connection, Server Started")
 
-connected = set()
 games = {}
 idCount = 0
 
-    """
-    Function to handle a client connection in a separate thread.
-    
-    Parameters:
-    - conn: The connection object representing the client connection.
-    - p: The player number associated with the client connection.
-    - gameId: The ID of the game associated with the client connection.
-    
-    Returns:
-    None
-    """
+"""
+Function to handle a client connection in a separate thread.
+
+Parameters:
+- conn: The connection object representing the client connection.
+- p: The player number associated with the client connection.
+- gameId: The ID of the game associated with the client connection.
+
+Returns:
+None
+"""
 def threaded_client(conn, p, gameId):
     global idCount
     conn.send(str.encode(str(p)))
@@ -47,7 +46,7 @@ def threaded_client(conn, p, gameId):
                     break
                 else:
                     if data == "reset":
-                        game.resetWant()
+                        game.resetWent()
                     elif data != "get":
                         game.play(p, data)
 

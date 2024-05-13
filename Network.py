@@ -8,10 +8,10 @@ class Network:
         self.server = "127.0.0.1"
         self.port = 5555
         self.addr = (self.server, self.port)
-        self.p = self.connect()
+        self.position = self.connect()
 
-    def getP(self):
-        return self.p
+    def get_position(self):
+        return self.position
 
     def connect(self):
         try:
@@ -29,3 +29,4 @@ class Network:
 
     def disconnect(self):
         self.client.close()
+
